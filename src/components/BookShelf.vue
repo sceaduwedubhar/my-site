@@ -50,7 +50,7 @@ const { data: novel } = useQuery({
     await fetch(`/novelapi?of=n-t-w-gl-ga-e&out=json&ncode=${ncodeStr.value}`)
       .then((res) => res.json())
       .then((res: Array<NovelData>) => {
-        const [first, ...rest] = res;
+        const [_first, ...rest] = res;
         return rest;
       })
       .catch((e) => {
