@@ -1,16 +1,18 @@
 <script setup lang="ts">
 import { useQuery } from "@tanstack/vue-query";
-import { computed, ref } from "vue";
-import type { NovelData } from "../types";
-import { GENRE, STATE } from "../constants";
-import dayjs from "dayjs";
-import utc from "dayjs/plugin/utc";
-import timezone from "dayjs/plugin/timezone";
 import { useStorage } from "@vueuse/core";
+import dayjs from "dayjs";
+import timezone from "dayjs/plugin/timezone";
+import utc from "dayjs/plugin/utc";
+import { useConfirm } from "primevue/useconfirm";
+import { computed, ref } from "vue";
+import { GENRE, STATE } from "../constants";
+import type { NovelData } from "../types";
 dayjs.extend(utc);
 dayjs.extend(timezone);
 
 dayjs.tz.setDefault();
+const confirm = useConfirm();
 const search = ref("");
 const page = ref(0);
 const total = ref(1);
@@ -61,11 +63,41 @@ const { data: novel } = useQuery({
 });
 
 const removeBook = (ncode: string) => {
-  storage.value = storage.value.filter((v) => v.ncode !== ncode);
+  confirm.require({
+    message: "Are you sure you want to remove this book from your shelf?",
+    header: "Confirmation",
+    icon: "pi pi-exclamation-triangle",
+    rejectProps: {
+      severity: "secondary",
+      outlined: true,
+    },
+    acceptProps: { severity: "danger" },
+    accept: () => {
+      storage.value = storage.value.filter((v) => v.ncode !== ncode);
+    },
+    reject: () => {
+      /* No action on reject */
+    },
+  });
 };
 
 const resetBookShelf = () => {
-  storage.value = [];
+  confirm.require({
+    message: "Are you sure you want to reset your shelf?",
+    header: "Confirmation",
+    icon: "pi pi-exclamation-triangle",
+    rejectProps: {
+      severity: "secondary",
+      outlined: true,
+    },
+    acceptProps: { severity: "danger" },
+    accept: () => {
+      storage.value = [];
+    },
+    reject: () => {
+      /* No action on reject */
+    },
+  });
 };
 
 const addBook = (item: NovelData) => {

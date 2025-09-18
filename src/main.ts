@@ -6,6 +6,7 @@ import App from "./App.vue";
 import Primevue from "primevue/config";
 import Aura from "@primeuix/themes/aura";
 import { VueQueryPlugin } from "@tanstack/vue-query";
+import { ConfirmationService } from "primevue";
 
 const app = createApp(App);
 app.use(Primevue, {
@@ -14,5 +15,6 @@ app.use(Primevue, {
   },
 });
 app.use(VueQueryPlugin);
+app.use(ConfirmationService);
 
 app.mount("#app");
