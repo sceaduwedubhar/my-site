@@ -156,7 +156,15 @@ const addBook = (item: NovelData) => {
                   <span>Total Chapters: {{ item.general_all_no }}</span>
                 </div>
                 <div class="text-sm">
-                  <span>Last updated: {{ item.general_lastup }}</span>
+                  <span
+                    >Last updated:
+                    {{
+                      dayjs
+                        .tz(item.general_lastup, "Asia/Tokyo")
+                        .tz(dayjs.tz.guess())
+                        .toDate()
+                    }}</span
+                  >
                 </div>
                 <div class="flex gap-2">
                   <a
