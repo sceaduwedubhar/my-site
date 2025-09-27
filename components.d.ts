@@ -9,14 +9,11 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     BookShelf: typeof import('./src/components/BookShelf.vue')['default']
-    Button: typeof import('primevue/button')['default']
     ConfirmDialog: typeof import('primevue/confirmdialog')['default']
     DataView: typeof import('primevue/dataview')['default']
     InputText: typeof import('primevue/inputtext')['default']
     Main: typeof import('./src/components/Main.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
-    SelectButton: typeof import('primevue/selectbutton')['default']
-    Tag: typeof import('primevue/tag')['default']
   }
 }

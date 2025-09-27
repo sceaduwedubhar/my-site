@@ -4,14 +4,17 @@ import { useStorage } from "@vueuse/core";
 import dayjs from "dayjs";
 import timezone from "dayjs/plugin/timezone";
 import utc from "dayjs/plugin/utc";
+import AdvancedFormat from "dayjs/plugin/advancedFormat";
 import { useConfirm } from "primevue/useconfirm";
 import { computed, ref } from "vue";
 import { GENRE, STATE } from "../constants";
 import type { NovelData } from "../types";
 dayjs.extend(utc);
 dayjs.extend(timezone);
+dayjs.extend(AdvancedFormat);
 
-dayjs.tz.setDefault();
+const local = dayjs.tz.guess();
+dayjs.tz.setDefault(local);
 const confirm = useConfirm();
 const search = ref("");
 const page = ref(0);
@@ -161,8 +164,8 @@ const addBook = (item: NovelData) => {
                     {{
                       dayjs
                         .tz(item.general_lastup, "Asia/Tokyo")
-                        .tz(dayjs.tz.guess())
-                        .toDate()
+                        .tz()
+                        .format("YYYY-MM-DD HH:mm:ss z")
                     }}</span
                   >
                 </div>
