@@ -39,7 +39,7 @@ const { data } = useQuery({
       .then((res) => res.json())
       .then((res: Array<NovelData>) => {
         console.log(res);
-        total.value = Math.min(Number(res[0]["allcount"]), 100);
+        total.value = Math.min(Number(res[0]["allcount"] || 0), 100);
         return res.slice(1, 6);
       })
       .catch((e) => {
